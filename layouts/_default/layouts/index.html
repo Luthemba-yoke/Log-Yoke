@@ -1,0 +1,12 @@
+{{ define "main" }}
+<h1 class="page-title">Latest entries</h1>
+{{ range .Site.RegularPages.ByDate.Reverse }}
+<article class="entry">
+  <p class="stardate">{{ .Date.Format "2 January 2006" }}</p>
+  <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+  <p>{{ .Summary | plainify | truncate 180 }}</p>
+</article>
+{{ else }}
+<p>No entries yet. First transmission coming soon.</p>
+{{ end }}
+{{ end }}

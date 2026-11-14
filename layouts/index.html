@@ -3,35 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Yoke Log | Transmission incoming</title>
+  <title>{{ .Site.Title }}</title>
+  <meta name="description" content="Tech news and notes from the Yoke Log.">
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #0A0A0A;
-      color: #8FD694;
-      font-family: "Courier New", monospace;
-      text-align: center;
-      padding: 2rem;
-    }
-    .box { max-width: 560px; }
-    .stardate { color: #F4C430; letter-spacing: 0.2em; font-size: 0.8rem; margin-bottom: 1.5rem; }
-    h1 { font-size: 2.4rem; margin-bottom: 1rem; color: #F4C430; }
-    p { line-height: 1.7; margin-bottom: 1rem; }
-    .blink { animation: blink 1.2s steps(2, start) infinite; }
-    @keyframes blink { to { visibility: hidden; } }
+    body { background: #0A0A0A; color: #f2f2f2; font-family: Arial, sans-serif; margin: 0; line-height: 1.6; }
+    header, main, footer { max-width: 760px; margin: 0 auto; padding: 24px; }
+    h1 { color: #F4C430; margin-bottom: 4px; }
+    .tagline { color: #8FD694; margin-top: 0; }
     a { color: #F4C430; }
+    article { border-top: 1px solid #333; padding: 16px 0; }
+    .date { color: #8FD694; font-size: 0.85em; }
+    footer { color: #888; font-size: 0.85em; border-top: 1px solid #333; }
   </style>
 </head>
 <body>
-  <div class="box">
-    <div class="stardate">YOKE LOG // INCOMING TRANSMISSION</div>
-    <h1>Log in progress<span class="blink">_</span></h1>
-    <p>Yoke is about to go live. Tech news, notes and field reports from the support desk are being prepared for launch.</p>
-    <p>Check back soon, or get in touch at <a href="mailto:hello@yoke.co.za">hello@yoke.co.za</a>.</p>
-  </div>
+  <header>
+    <h1>{{ .Site.Title }}</h1>
+    <p class="tagline">Transmissions on tech, cloud and the things in between.</p>
+  </header>
+
+  <main>
+    {{ range (where .Site.RegularPages "Section" "posts").ByDate.Reverse }}
+    <article>
+      <span class="date">Stardate {{ .Date.Format "2006.01.02" }}</span>
+      <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+      <p>{{ .Summary }}</p>
+    </article>
+    {{ else }}
+    <p>First transmission incoming. Check back soon.</p>
+    {{ end }}
+  </main>
+
+  <footer>
+    &copy; {{ now.Year }} Yoke Log
+  </footer>
 </body>
 </html>

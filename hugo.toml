@@ -1,0 +1,6 @@
+baseURL = "https://log.yoke.co.za/"
+languageCode = "en-za"
+title = "Yoke Log"
+
+[params]
+  tagline = "Tech news, notes and field reports from the support desk"

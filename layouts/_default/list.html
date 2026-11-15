@@ -1,77 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ .Title }} | {{ .Site.Title | default "Log" }}</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@500;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/archive.css">
-</head>
-<body>
-  <header class="bar">
-    <a class="cap" href="/">{{ .Site.Title | default "Log" }}</a>
-    <span class="rule"></span>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/posts/" aria-current="page">Archive</a>
-    </nav>
-  </header>
+{{ define "main" }}
+<link rel="stylesheet" href="/css/archive.css">
 
-  <main class="wrap">
-    <h1>{{ .Title }}</h1>
-    <p class="lede">Every post, newest first. Pick one to read it.</p>
+<h1 class="page-title">{{ .Title }}</h1>
+<p class="arc-lede">Every transmission, newest first. Pick one to read it.</p>
 
-    <label class="filter">
-      <span>Filter posts</span>
-      <input id="q" type="search" placeholder="Type a word from a title or summary" autocomplete="off">
-    </label>
+<label class="arc-filter">
+  <span>Filter posts</span>
+  <input id="q" type="search" placeholder="Type a word from a title or summary" autocomplete="off">
+</label>
 
-    {{/*
-      ARTICLES LIST: each .md file in content/posts/ becomes one row below, grouped by year.
-      To add an article, add a new file there. Nothing in this template needs editing.
-      The row's date comes from "date:" and the summary from "description:" in the front matter.
-      Clicking a row opens that article's page (layouts/_default/single.html).
-    */}}
-    {{ range .Pages.GroupByDate "2006" }}
-    <section class="year" aria-labelledby="y{{ .Key }}">
-      <h2 id="y{{ .Key }}">{{ .Key }}</h2>
-      <ul class="entries">
-        {{ range .Pages }}
-        <li class="entry">
-          <a href="{{ .RelPermalink }}">
-            <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "02 Jan" }}</time>
-            <span class="txt">
-              <strong>{{ .Title }}</strong>
-              <span class="sum">{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 160 }}{{ end }}</span>
-            </span>
-          </a>
-        </li>
-        {{ end }}
-      </ul>
-    </section>
+{{/*
+  Each .md file in content/posts/ becomes one row here, grouped by year.
+  To add an article, add a new file there. Nothing in this template needs editing.
+*/}}
+{{ range .Pages.GroupByDate "2006" }}
+<section class="arc-year" aria-labelledby="y{{ .Key }}">
+  <h2 id="y{{ .Key }}">{{ .Key }}</h2>
+  <ul class="arc-list">
+    {{ range .Pages }}
+    <li class="arc-item">
+      <a href="{{ .RelPermalink }}">
+        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "02 Jan" }}</time>
+        <span>
+          <strong>{{ .Title }}</strong>
+          <span class="arc-sum">{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 160 }}{{ end }}</span>
+        </span>
+      </a>
+    </li>
     {{ end }}
+  </ul>
+</section>
+{{ else }}
+<p>No entries yet. First transmission coming soon.</p>
+{{ end }}
 
-    <p id="none" hidden>No posts match that filter.</p>
-  </main>
+<p id="none" hidden>No posts match that filter.</p>
 
-  <script>
-    const q = document.getElementById('q');
-    const none = document.getElementById('none');
-    q.addEventListener('input', () => {
-      const t = q.value.trim().toLowerCase();
-      let shown = 0;
-      document.querySelectorAll('.entry').forEach(e => {
-        const match = !t || e.textContent.toLowerCase().includes(t);
-        e.hidden = !match;
-        if (match) shown++;
-      });
-      document.querySelectorAll('.year').forEach(y => {
-        y.hidden = !y.querySelector('.entry:not([hidden])');
-      });
-      none.hidden = shown > 0;
+<script>
+  const q = document.getElementById('q');
+  const none = document.getElementById('none');
+  q.addEventListener('input', () => {
+    const t = q.value.trim().toLowerCase();
+    let shown = 0;
+    document.querySelectorAll('.arc-item').forEach(e => {
+      const match = !t || e.textContent.toLowerCase().includes(t);
+      e.hidden = !match;
+      if (match) shown++;
     });
-  </script>
-</body>
-</html>
+    document.querySelectorAll('.arc-year').forEach(y => {
+      y.hidden = !y.querySelector('.arc-item:not([hidden])');
+    });
+    none.hidden = shown > 0;
+  });
+</script>
+{{ end }}

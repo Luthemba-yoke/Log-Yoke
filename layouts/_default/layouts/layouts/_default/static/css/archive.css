@@ -1,0 +1,51 @@
+.arc-lede { color: #9A988E; margin: 0 0 1.5rem; }
+
+.arc-filter { display: block; max-width: 28rem; margin-bottom: 2rem; }
+.arc-filter span { display: block; color: #8FD694; margin-bottom: 0.3rem; }
+.arc-filter input {
+  width: 100%;
+  background: #151515;
+  color: #E9E7DF;
+  border: 0;
+  border-bottom: 3px solid #F4C430;
+  padding: 0.7rem 0.9rem;
+  font: inherit;
+}
+.arc-filter input:focus-visible { outline: 3px solid #F4C430; outline-offset: 3px; }
+
+.arc-year h2 {
+  color: #9A988E;
+  margin: 2.5rem 0 0.5rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid #8FD694;
+}
+.arc-list { list-style: none; margin: 0; padding: 0; }
+.arc-item[hidden], .arc-year[hidden] { display: none; }
+.arc-item a {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  gap: 1.25rem;
+  padding: 1rem 0;
+  text-decoration: none;
+  color: inherit;
+}
+.arc-item time {
+  align-self: start;
+  background: #F4C430;
+  color: #0A0A0A;
+  font-weight: 700;
+  text-align: center;
+  padding: 0.25rem 0.75rem 0.25rem 0.5rem;
+  border-radius: 999px 0 0 999px;
+}
+.arc-item strong { display: block; font-size: 1.2rem; line-height: 1.3; }
+.arc-sum { display: block; color: #9A988E; font-size: 0.95rem; margin-top: 0.25rem; }
+.arc-item a:hover strong, .arc-item a:focus-visible strong { color: #8FD694; }
+.arc-item a:hover time, .arc-item a:focus-visible time { background: #8FD694; }
+
+.arc-back { margin-top: 2.5rem; }
+
+@media (max-width: 36rem) {
+  .arc-item a { grid-template-columns: 1fr; gap: 0.5rem; }
+  .arc-item time { justify-self: start; padding: 0.15rem 1rem 0.15rem 0.8rem; }
+}
